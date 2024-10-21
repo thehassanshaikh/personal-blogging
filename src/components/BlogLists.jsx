@@ -1,37 +1,49 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const BlogLists = () => {
-  const [posts, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(()=>{
-    axios.get("https://pmschemehub.in/wp-json/wp/v2/postsgit")
-  })
+  useEffect(() => {
+    // Fetch data from the WordPress REST API
+    axios
+      .get("https://pmschemehub.in/wp-json/wp/v2/posts")
+      .then((response) => {
+        setPosts(response.data);
+        console.log(posts);
+        setLoading(false); // Set loading to false after data is fetched
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+        setLoading(false);
+      });
+  }, []);
 
+  if (loading) {
+    return <p>Post are Loading...</p>;
+  }
   return (
     <>
       <section>
         <div>
-          <div className="bg-white">
-            <h2 className="text-3xl font-bold">This is the title of blog</h2>
-            <div>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro
-                suscipit perferendis dolor velit, odit laudantium cupiditate
-                mollitia modi soluta, assumenda quam provident vero
-                exercitationem id optio autem rem obcaecati sed.
-              </p>
+          {posts.map((post) => (
+            <div key={post.id} className="bg-white">
+              <h2 className="text-3xl font-bold">{post.title.rendered}</h2>
+              <div>
+                <p>{post.excerpt.rendered.replace(/<[^>]*>/g, "")}</p>
+              </div>
+              <div>
+                <Link
+                  className="border border-black px-3 rounded"
+                  to={`/post/${post.id}`}
+                >
+                  Read More
+                </Link>
+              </div>
             </div>
-            <div>
-              <button
-                type="button"
-                className="border border-black px-3 rounded"
-              >
-                Read More
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </>
