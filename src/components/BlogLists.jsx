@@ -1,4 +1,14 @@
-const BlogList = () => {
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+const BlogLists = () => {
+  const [posts, setPost] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(()=>{
+    axios.get("https://pmschemehub.in/wp-json/wp/v2/postsgit")
+  })
+
   return (
     <>
       <section>
@@ -28,4 +38,4 @@ const BlogList = () => {
   );
 };
 
-export default BlogList;
+export default BlogLists;
