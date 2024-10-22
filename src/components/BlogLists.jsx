@@ -33,6 +33,7 @@ const BlogLists = () => {
   if (loading) {
     return <p>Post are Loading...</p>;
   }
+  
   return (
     <>
       <section>
@@ -41,18 +42,23 @@ const BlogLists = () => {
         ) : (
           <div>
             {posts.map((post) => (
-              <div key={post.id} className="bg-white p-5 mb-4 rounded-lg">
-                <h2 className="text-2xl font-bold text-neutral-900">
-                  {post.title.rendered}
-                </h2>
-                <div className="py-2">
-                  <p className="text-neutral-900">
+              <div
+                key={post.id}
+                className="bg-white p-5 mb-4 rounded-lg shadow-md"
+              >
+                <Link to={`/post/${post.id}`}>
+                  <h2 className="text-2xl font-bold text-neutral-900 hover:text-blue-600">
+                    {post.title.rendered}
+                  </h2>
+                </Link>
+                <div>
+                  <p className="text-neutral-900 py-2">
                     {post.excerpt.rendered.replace(/<[^>]*>/g, "")}
                   </p>
                 </div>
-                <div>
+                <div className="py-2">
                   <Link
-                    className="border border-black px-3 rounded"
+                    className="border border-blue-600 py-1 px-2 rounded text-blue-600 hover:bg-blue-600 hover:text-white"
                     to={`/post/${post.id}`}
                   >
                     Read More
