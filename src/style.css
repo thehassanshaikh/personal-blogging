@@ -1,0 +1,32 @@
+.post-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 20px;
+  }
+  
+  .post-content table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .post-content th, .post-content td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  .post-content p {
+    margin-bottom: 16px; /* Adds space below each paragraph */
+  }
+  
+  .post-content ul,
+  .post-content ol {
+    margin-bottom: 16px; /* Adds space below lists */
+  }
+  
+  .post-content table {
+    margin-bottom: 20px; /* Adds space below tables */
+  }
+  
+  .post-content li {
+    margin-bottom: 8px; /* Adds space between list items */
+  }

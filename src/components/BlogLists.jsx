@@ -8,6 +8,13 @@ const BlogLists = () => {
   const [page, setPage] = useState(1); // Current page state
   const [totalPages, setTotalPages] = useState(1); // Total pages state
 
+  // Function to decode HTML entities
+  const decodeEntities = (html) => {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  };
+
   useEffect(() => {
     // Fetch data from the WordPress REST API
     axios
@@ -33,7 +40,7 @@ const BlogLists = () => {
   if (loading) {
     return <p>Post are Loading...</p>;
   }
-  
+
   return (
     <>
       <section>
@@ -52,8 +59,10 @@ const BlogLists = () => {
                   </h2>
                 </Link>
                 <div>
-                  <p className="text-neutral-900 py-2">
-                    {post.excerpt.rendered.replace(/<[^>]*>/g, "")}
+                  <p className="text-neutral-900 py-2 ">
+                    {decodeEntities(
+                      post.excerpt.rendered.replace(/<[^>]*>/g, "")
+                    )}
                   </p>
                 </div>
                 <div className="py-2">
