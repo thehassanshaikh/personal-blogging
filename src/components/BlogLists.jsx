@@ -29,10 +29,14 @@ const BlogLists = () => {
       <section>
         <div>
           {posts.map((post) => (
-            <div key={post.id} className="bg-white">
-              <h2 className="text-3xl font-bold">{post.title.rendered}</h2>
-              <div>
-                <p>{post.excerpt.rendered.replace(/<[^>]*>/g, "")}</p>
+            <div key={post.id} className="bg-white p-5 mb-4 rounded-lg">
+              <h2 className="text-2xl font-bold text-neutral-900">
+                {post.title.rendered}
+              </h2>
+              <div className="py-2">
+                <p className="text-neutral-900">
+                  {post.excerpt.rendered.replace(/<[^>]*>/g, "")}
+                </p>
               </div>
               <div>
                 <Link
