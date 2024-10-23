@@ -53,7 +53,7 @@ const BlogLists = () => {
                 key={post.id}
                 className="bg-white p-5 mb-4 rounded-lg shadow-md"
               >
-                <Link to={`/post/${post.id}`}>
+                <Link to={`/post/${post.slug}`}>
                   <h2 className="text-2xl font-bold text-neutral-900 hover:text-blue-600">
                     {post.title.rendered}
                   </h2>
@@ -68,7 +68,7 @@ const BlogLists = () => {
                 <div className="py-2">
                   <Link
                     className="border border-blue-600 py-1 px-2 rounded text-blue-600 hover:bg-blue-600 hover:text-white"
-                    to={`/post/${post.id}`}
+                    to={`/post/${post.slug}`}
                   >
                     Read More
                   </Link>

@@ -6,25 +6,35 @@ import axios from "axios";
 import "../style.css"; // Import the external CSS file
 
 const SingleBlogPage = () => {
-  const { id } = useParams(); // Destructure id correctly
+  const { slug } = useParams(); // Use slug instead of id
   const [post, setPost] = useState(null); // Corrected setPost (singular)
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // Error state
 
   useEffect(() => {
     axios
-      .get(`https://pmschemehub.in/wp-json/wp/v2/posts/${id}`) // Use the id for fetching the post
+      .get(`https://pmschemehub.in/wp-json/wp/v2/posts?slug=${slug}`) // Fetch post using slug
       .then((response) => {
-        setPost(response.data); // Correctly setPost
+        if (response.data.length > 0) {
+          setPost(response.data[0]); // Set the first post found
+        } else {
+          setError("Post not found."); // Handle case when no post is found
+        }
         setLoading(false);
       })
       .catch((error) => {
         console.log("Error Fetching Post", error);
+        setError("An error occurred while fetching the post."); // Set error message
         setLoading(false);
       });
-  }, [id]);
+  }, [slug]);
 
   if (loading) {
     return <p>Loading Post ...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>; // Display error message if there's an error
   }
 
   return (

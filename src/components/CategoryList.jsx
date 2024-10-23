@@ -30,7 +30,7 @@ const CategoryList = () => {
           {categories.map((category) => (
             <li key={category.id} className="mb-2">
               <Link
-                to={`/category/${category.id}`}
+                to={`/category/${category.slug}`}
                 className="text-neuteal-900 hover:underline hover:text-blue-600"
               >
                 {category.name} ({category.count})

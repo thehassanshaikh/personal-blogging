@@ -5,28 +5,43 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 
 const CategoryPage = () => {
-  const { categoryId } = useParams(); // Get categoryId from URL params
+  const { categorySlug } = useParams(); // Get categorySlug from URL params
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1); // Current page number
   const [totalPages, setTotalPages] = useState(1); // Total number of pages
+  const [categoryId, setCategoryId] = useState(null); // Store categoryId once fetched
 
   useEffect(() => {
-    // Fetch posts by category with pagination
+    console.log("Fetching category for slug:", categorySlug); // Log slug
+    // Fetch category by slug to get the category ID
     axios
       .get(
-        `https://pmschemehub.in/wp-json/wp/v2/posts?categories=${categoryId}&page=${page}&per_page=10`
+        `https://pmschemehub.in/wp-json/wp/v2/categories?slug=${categorySlug}`
       )
       .then((response) => {
+        console.log("Category response:", response.data); // Log response data
+        if (response.data.length > 0) {
+          const category = response.data[0];
+          setCategoryId(category.id); // Set categoryId after fetching the category
+          return axios.get(
+            `https://pmschemehub.in/wp-json/wp/v2/posts?categories=${category.id}&page=${page}&per_page=10`
+          );
+        } else {
+          console.error("No category found with the provided slug.");
+          throw new Error("Category not found");
+        }
+      })
+      .then((response) => {
         setPosts(response.data);
-        setTotalPages(parseInt(response.headers["x-wp-totalpages"], 10)); // Get total pages from the response headers
+        setTotalPages(parseInt(response.headers["x-wp-totalpages"], 10)); // Get total pages from response headers
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error Fetching Category", error);
+        console.error("Error Fetching Category:", error);
         setLoading(false);
       });
-  }, [categoryId, page]); // Refetch when categoryId or page changes
+  }, [categorySlug, page]); // Refetch when categorySlug or page changes
 
   const handlePageClick = (newPage) => {
     setPage(newPage); // Update the current page
@@ -57,13 +72,14 @@ const CategoryPage = () => {
               key={post.id}
               className="bg-white p-5 mb-4 rounded-lg shadow-md"
             >
-              <Link to={`/post/${post.id}`}>
+              {/* Use post slug instead of post ID */}
+              <Link to={`/post/${post.slug}`}>
                 <h2 className="text-2xl font-bold text-neutral-900 hover:text-blue-600">
                   {post.title.rendered}
                 </h2>
               </Link>
               <div>
-                <p className="text-neutral-900 py-2 ">
+                <p className="text-neutral-900 py-2">
                   {decodeEntities(
                     post.excerpt.rendered.replace(/<[^>]*>/g, "")
                   )}
@@ -72,7 +88,7 @@ const CategoryPage = () => {
               <div className="py-2">
                 <Link
                   className="border border-blue-600 py-1 px-2 rounded text-blue-600 hover:bg-blue-600 hover:text-white"
-                  to={`/post/${post.id}`}
+                  to={`/post/${post.slug}`}
                 >
                   Read More
                 </Link>
@@ -82,9 +98,9 @@ const CategoryPage = () => {
         </div>
 
         {/* Pagination Controls */}
-        <div className="pagination flex justify-center mt-4">
-          {totalPages > 1 &&
-            Array.from({ length: totalPages }, (_, index) => (
+        {totalPages > 1 && (
+          <div className="pagination flex justify-center mt-4">
+            {Array.from({ length: totalPages }, (_, index) => (
               <button
                 key={index + 1}
                 onClick={() => handlePageClick(index + 1)}
@@ -95,7 +111,8 @@ const CategoryPage = () => {
                 {index + 1}
               </button>
             ))}
-        </div>
+          </div>
+        )}
       </div>
       <div className="w-2/12 px-2">
         <LatestPost />
