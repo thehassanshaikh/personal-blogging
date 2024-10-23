@@ -83,11 +83,9 @@ const BlogLists = () => {
             <button
               key={index + 1}
               onClick={() => handlePageClick(index + 1)}
-              className={
-                page === index + 1
-                  ? "active bg-blue-300 p-2 m-2 rounded"
-                  : "p-2 border-blue-500 bg-white m-2"
-              }
+              className={`px-2 py-1 m-1 rounded ${
+                page === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
+              }`}
             >
               {index + 1}
             </button>
