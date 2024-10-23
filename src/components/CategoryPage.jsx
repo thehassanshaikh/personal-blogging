@@ -50,7 +50,7 @@ const CategoryPage = () => {
       <div className="w-2/12 px-2">
         <CategoryList />
       </div>
-      <div className="w-5/12 px-2">
+      <div className="w-5/12 px-2 min-h-screen">
         <div>
           {posts.map((post) => (
             <div
@@ -83,17 +83,18 @@ const CategoryPage = () => {
 
         {/* Pagination Controls */}
         <div className="pagination flex justify-center mt-4">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => handlePageClick(index + 1)}
-              className={`px-2 py-1 m-1 rounded ${
-                page === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
-              }`}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {totalPages > 1 &&
+            Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => handlePageClick(index + 1)}
+                className={`px-2 py-1 m-1 rounded ${
+                  page === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
         </div>
       </div>
       <div className="w-2/12 px-2">
