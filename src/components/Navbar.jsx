@@ -1,13 +1,16 @@
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
-    <nav className="bg-white mb-4">
+    <nav className="bg-white mb-4 shadow-sm">
       <div className="flex m-auto justify-between w-9/12 p-2">
         <div>
-          <img
-            className="w-10 h-10"
-            src="https://cdn.pixabay.com/photo/2022/01/16/16/44/blogger-logo-6942640_1280.png"
-            alt=""
-          />
+          <Link to="/">
+            <img
+              className="w-10 h-10"
+              src="https://cdn.pixabay.com/photo/2022/01/16/16/44/blogger-logo-6942640_1280.png"
+              alt=""
+            />
+          </Link>
         </div>
         <div className="w-8/12 m-auto">
           <input

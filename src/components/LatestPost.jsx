@@ -32,7 +32,7 @@ const LatestPost = () => {
             key={post.id}
             className="text-neuteal-900 hover:underline hover:text-blue-600 mb-2"
           >
-            <Link to={`/post/${post.id}`}>{post.title.rendered}</Link>
+            <Link to={`/post/${post.slug}`}>{post.title.rendered}</Link>
           </li>
         ))}{" "}
         {/* Added parentheses to return JSX */}

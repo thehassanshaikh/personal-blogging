@@ -6,7 +6,6 @@ import Navbar from "./Navbar";
 const Home = () => {
   return (
     <>
-      <Navbar />
       <section className="w-full flex justify-center">
         <div className="w-2/12 px-2">
           <CategoryList />
