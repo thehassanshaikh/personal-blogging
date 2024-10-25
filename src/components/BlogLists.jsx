@@ -35,6 +35,7 @@ const BlogLists = () => {
 
   const handlePageClick = (pageNumber) => {
     setPage(pageNumber);
+    window.scrollTo(0, 0);
   };
 
   if (loading) {
