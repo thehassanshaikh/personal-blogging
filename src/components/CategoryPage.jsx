@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import CategoryList from "./CategoryList";
-import LatestPost from "./LatestPost";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 
@@ -61,63 +59,50 @@ const CategoryPage = () => {
   };
 
   return (
-    <section className="w-full flex justify-center">
-      <div className="w-2/12 px-2">
-        <CategoryList />
-      </div>
-      <div className="w-5/12 px-2 min-h-screen">
-        <div>
-          {posts.map((post) => (
-            <div
-              key={post.id}
-              className="bg-white p-5 mb-4 rounded-lg shadow-md"
-            >
-              {/* Use post slug instead of post ID */}
-              <Link to={`/post/${post.slug}`}>
-                <h2 className="text-2xl font-bold text-neutral-900 hover:text-blue-600">
-                  {post.title.rendered}
-                </h2>
-              </Link>
-              <div>
-                <p className="text-neutral-900 py-2">
-                  {decodeEntities(
-                    post.excerpt.rendered.replace(/<[^>]*>/g, "")
-                  )}
-                </p>
-              </div>
-              <div className="py-2">
-                <Link
-                  className="border border-blue-600 py-1 px-2 rounded text-blue-600 hover:bg-blue-600 hover:text-white"
-                  to={`/post/${post.slug}`}
-                >
-                  Read More
-                </Link>
-              </div>
+    <div className="w-full">
+      <div>
+        {posts.map((post) => (
+          <div key={post.id} className="bg-white p-5 mb-4 rounded-lg shadow-md">
+            {/* Use post slug instead of post ID */}
+            <Link to={`/post/${post.slug}`}>
+              <h2 className="text-2xl font-bold text-neutral-900 hover:text-blue-600">
+                {post.title.rendered}
+              </h2>
+            </Link>
+            <div>
+              <p className="text-neutral-900 py-2">
+                {decodeEntities(post.excerpt.rendered.replace(/<[^>]*>/g, ""))}
+              </p>
             </div>
+            <div className="py-2">
+              <Link
+                className="border border-blue-600 py-1 px-2 rounded text-blue-600 hover:bg-blue-600 hover:text-white"
+                to={`/post/${post.slug}`}
+              >
+                Read More
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="pagination flex justify-center mt-4">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageClick(index + 1)}
+              className={`px-2 py-1 m-1 rounded ${
+                page === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
+              }`}
+            >
+              {index + 1}
+            </button>
           ))}
         </div>
-
-        {/* Pagination Controls */}
-        {totalPages > 1 && (
-          <div className="pagination flex justify-center mt-4">
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index + 1}
-                onClick={() => handlePageClick(index + 1)}
-                className={`px-2 py-1 m-1 rounded ${
-                  page === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-      <div className="w-2/12 px-2">
-        <LatestPost />
-      </div>
-    </section>
+      )}
+    </div>
   );
 };
 

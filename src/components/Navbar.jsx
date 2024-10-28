@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
-    <nav className="bg-white mb-4 shadow-sm">
+    <nav className="bg-white mb-4 shadow-sm sticky top-0">
       <div className="flex m-auto justify-between w-9/12 p-2">
         <div>
           <Link to="/">

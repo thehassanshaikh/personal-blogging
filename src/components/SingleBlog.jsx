@@ -1,6 +1,4 @@
 import { useParams } from "react-router-dom";
-import CategoryList from "./CategoryList";
-import LatestPost from "./LatestPost";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "../style.css"; // Import the external CSS file
@@ -38,29 +36,21 @@ const SingleBlogPage = () => {
   }
 
   return (
-    <section className="w-full flex justify-center">
-      <div className="w-2/12 px-2">
-        <CategoryList />
-      </div>
-      <div className="w-5/12 p-5 bg-white ">
-        {post && (
-          <>
-            <h1 className="text-2xl font-bold text-neutral-900">
-              {post.title.rendered}
-            </h1>
-            <div className="post-content">
-              <p
-                className="text-neutral-700 "
-                dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-              ></p>
-            </div>
-          </>
-        )}
-      </div>
-      <div className="w-2/12 px-2">
-        <LatestPost />
-      </div>
-    </section>
+    <div className="w-full p-5 bg-white rounded-lg">
+      {post && (
+        <>
+          <h1 className="text-2xl font-bold text-neutral-900">
+            {post.title.rendered}
+          </h1>
+          <div className="post-content">
+            <p
+              className="text-neutral-700 "
+              dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+            ></p>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 

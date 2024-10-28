@@ -24,7 +24,7 @@ const LatestPost = () => {
   }
 
   return (
-    <aside className="sidebar bg-white p-5 mb-4 rounded-lg shadow-md">
+    <aside className="sidebar bg-white p-5 mb-4 rounded-lg shadow-md sticky top-16">
       <h2 className="text-xl font-bold text-neutral-900 pb-2">Latest Posts</h2>
       <ul>
         {latestPosts.map((post) => (
