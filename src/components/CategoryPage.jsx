@@ -9,6 +9,7 @@ const CategoryPage = () => {
   const [page, setPage] = useState(1); // Current page number
   const [totalPages, setTotalPages] = useState(1); // Total number of pages
   const [categoryId, setCategoryId] = useState(null); // Store categoryId once fetched
+  const [categoryName, setCategoryName] = useState();
 
   useEffect(() => {
     console.log("Fetching category for slug:", categorySlug); // Log slug
@@ -22,6 +23,7 @@ const CategoryPage = () => {
         if (response.data.length > 0) {
           const category = response.data[0];
           setCategoryId(category.id); // Set categoryId after fetching the category
+          setCategoryName(category.name);
           return axios.get(
             `https://pmschemehub.in/wp-json/wp/v2/posts?categories=${category.id}&page=${page}&per_page=10`
           );
@@ -60,6 +62,14 @@ const CategoryPage = () => {
 
   return (
     <div className="w-full">
+      <div className="p-4 bg-white rounded-sm shadow-sm mb-4">
+        <h2 className="text-3xl font-bold text-neutral-900 m-2">
+          {" "}
+          {categoryName}
+        </h2>
+      </div>
+
+      {/* Display Category Name */}
       <div>
         {posts.map((post) => (
           <div key={post.id} className="bg-white p-5 mb-4 rounded-lg shadow-md">
@@ -85,7 +95,6 @@ const CategoryPage = () => {
           </div>
         ))}
       </div>
-
       {/* Pagination Controls */}
       {totalPages > 1 && (
         <div className="pagination flex justify-center mt-4">
