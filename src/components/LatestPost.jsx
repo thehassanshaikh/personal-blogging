@@ -8,7 +8,7 @@ const LatestPost = () => {
 
   useEffect(() => {
     axios
-      .get("https://pmschemehub.in/wp-json/wp/v2/posts?per_page=5")
+      .get("/api/wp-json/wp/v2/posts?per_page=5")
       .then((response) => {
         setLatestPosts(response.data);
         setLoading(false);

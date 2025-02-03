@@ -11,7 +11,7 @@ const SingleBlogPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://pmschemehub.in/wp-json/wp/v2/posts?slug=${slug}`) // Fetch post using slug
+      .get(`/api/wp-json/wp/v2/posts?slug=${slug}`) // Fetch post using slug
       .then((response) => {
         if (response.data.length > 0) {
           setPost(response.data[0]); // Set the first post found

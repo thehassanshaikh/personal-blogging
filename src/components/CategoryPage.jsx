@@ -16,7 +16,7 @@ const CategoryPage = () => {
     // Fetch category by slug to get the category ID
     axios
       .get(
-        `https://pmschemehub.in/wp-json/wp/v2/categories?slug=${categorySlug}`
+        `/api/wp-json/wp/v2/categories?slug=${categorySlug}`
       )
       .then((response) => {
         console.log("Category response:", response.data); // Log response data
@@ -25,7 +25,7 @@ const CategoryPage = () => {
           setCategoryId(category.id); // Set categoryId after fetching the category
           setCategoryName(category.name);
           return axios.get(
-            `https://pmschemehub.in/wp-json/wp/v2/posts?categories=${category.id}&page=${page}&per_page=10`
+            `/api/wp-json/wp/v2/posts?categories=${category.id}&page=${page}&per_page=10`
           );
         } else {
           console.error("No category found with the provided slug.");

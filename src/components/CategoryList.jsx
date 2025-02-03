@@ -8,7 +8,7 @@ const CategoryList = () => {
 
   useEffect(() => {
     axios
-      .get("https://pmschemehub.in/wp-json/wp/v2/categories")
+      .get("/api/wp-json/wp/v2/categories")
       .then((response) => {
         setCategories(response.data);
         setLoading(false);

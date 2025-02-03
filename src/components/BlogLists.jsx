@@ -18,9 +18,7 @@ const BlogLists = () => {
   useEffect(() => {
     // Fetch data from the WordPress REST API
     axios
-      .get(
-        `https://pmschemehub.in/wp-json/wp/v2/posts?per_page=10&page=${page}`
-      )
+      .get(`  /api/wp-json/wp/v2/posts?per_page=10&page=${page}`)
       .then((response) => {
         setPosts(response.data);
         setTotalPages(parseInt(response.headers["x-wp-totalpages"])); // Total pages from headers
